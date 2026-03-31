@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>עולם הפרצופים - המאגר הענק והנקי</title>
+    <title>עולם הפרצופים - המאגר המושלם</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,15 +12,17 @@
             background-color: #f1f5f9;
         }
         .kaomoji-card {
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             user-select: none;
             background: white;
+            min-height: 90px;
         }
         .kaomoji-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.15);
             border-color: #4f46e5;
+            background-color: #f8fafc;
         }
         .toast {
             position: fixed;
@@ -39,42 +41,36 @@
             opacity: 1;
             bottom: 3rem;
         }
-        .count-badge {
-            background: #4f46e5;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-        }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-10 pb-24">
 
     <!-- Header -->
     <header class="max-w-5xl mx-auto text-center mb-10">
-        <h1 class="text-5xl font-black text-slate-900 mb-4">◮◡◭ ה-Kaomoji-דקס ◪◡◪</h1>
-        <p class="text-lg text-slate-600">מאות פרצופי טקסט נקיים ללא אימוג'ים - העתקה בלחיצה אחת</p>
+        <h1 class="text-5xl font-black text-slate-900 mb-4">◮◡◭ ה-Kaomoji המורחב ◪◡◪</h1>
+        <p class="text-lg text-slate-600">הוספנו עוד מאות פרצופים מעוצבים - הכל טקסט נקי!</p>
     </header>
 
     <!-- Navigation -->
     <nav class="max-w-6xl mx-auto mb-8 sticky top-4 z-40 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-xl border border-slate-200">
         <div class="flex flex-wrap justify-center gap-2 mb-4" id="filters">
             <button onclick="filterItems('all', this)" class="btn-filter px-5 py-2 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg transition">הכל</button>
-            <button onclick="filterItems('classic', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">קלאסי ◮◡◭</button>
+            <button onclick="filterItems('simple', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">פשוטים ◕‿◕</button>
+            <button onclick="filterItems('cute', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">חמודים (◡‿◡✿)</button>
+            <button onclick="filterItems('cool', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">קול ⌐■_■</button>
+            <button onclick="filterItems('funny', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">מצחיקים (o^▽^o)</button>
             <button onclick="filterItems('geometry', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">גיאומטרי ◗◡◖</button>
-            <button onclick="filterItems('minimal', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">מינימלי •◡•</button>
-            <button onclick="filterItems('action', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">פעולה ᕕ( ᐛ )ᕗ</button>
-            <button onclick="filterItems('complex', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">מורכב (づ◡﹏◡)づ</button>
+            <button onclick="filterItems('action', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">פעולה ᕙ(⇀‸↼)ᕗ</button>
         </div>
         
         <div class="relative max-w-xl mx-auto">
-            <input type="text" id="searchInput" oninput="search()" placeholder="חיפוש מהיר..." class="w-full px-6 py-4 pr-12 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition text-xl">
+            <input type="text" id="searchInput" oninput="search()" placeholder="חפש פרצוף (למשל: שמח, כועס...)" class="w-full px-6 py-4 pr-12 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition text-xl">
             <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">🔍</span>
         </div>
     </nav>
 
     <div class="max-w-6xl mx-auto px-2 mb-6 flex justify-between items-center">
-        <span class="text-slate-500">נמצאו <b id="count" class="text-indigo-600">0</b> תוצאות</span>
+        <span class="text-slate-500">נמצאו <b id="count" class="text-indigo-600">0</b> פרצופים מדהימים</span>
     </div>
 
     <!-- Grid -->
@@ -82,62 +78,90 @@
         <!-- JS builds cards here -->
     </main>
 
-    <div id="toast" class="toast">הועתק! ✓</div>
+    <div id="toast" class="toast">הועתק בהצלחה! ✓</div>
 
     <script>
         const symbols = {
-            eyes: ["◮", "◪", "◗", "◖", "◕", "◔", "⊙", "⚆", "๏", "°", "•", "·", "⍤", "⍥", "⍨", "ᵔ", "¬", "◑", "◐", "X", "U", "V", "ಠ", "Θ", "O", "o", "♥", "♦", "◊", "◘", "◙", "◜", "◝", "◡", "◠", "◒", "◓"],
-            mouths: ["◡", "‿", "▿", " ", "_", "ω", "﹏", "‸", "Δ", "▽", "ᴥ", "◡", "‿", "v", "V", "o", "O", "☐", "▭", "口", "皿", "ㅅ", "꒳", "A"],
-            arms: [["(", ")"], ["[", "]"], ["{", "}"], ["<", ">"], ["⤜", "⤏"], ["ᕙ", "ᕗ"], ["ᕦ", "ᕤ"], ["༼", "༽"], ["(づ", " )づ"], ["ᕕ(", ")ᕗ"], ["╰(", ")╯"], ["(つ", ")つ"]]
+            eyes: ["◕", "◔", "◖", "◗", "◮", "◪", "⊙", "⚆", "๏", "°", "•", "·", "⍤", "⍥", "⍨", "ᵔ", "¬", "◑", "◐", "ಠ", "Θ", "O", "o", "♥", "◊", "◘", "◙", "◡", "◠", "◒", "◓", "ↀ", "ↁ", "ↂ", "≖", "≗", "⪧", "⪦", "⪩", "⪨"],
+            mouths: ["◡", "‿", "▿", " ", "_", "ω", "﹏", "‸", "Δ", "▽", "ᴥ", "v", "V", "o", "O", "☐", "皿", "ㅅ", "꒳", "A", "エ", "ㅂ", "ᗨ", "ᗝ", "ᗣ"],
+            decor: ["✿", "☆", "★", "✧", "✦", "†", "‡", "⋆", "⌛", "☕", "⚓", "⚡", "☘", "⚘", "⚜", "⚔", "🛡", "⚖"],
+            brackets: [["(", ")"], ["[", "]"], ["{", "}"], ["<", ">"], ["⤜", "⤏"], ["ᕙ", "ᕗ"], ["ᕦ", "ᕤ"], ["༼", "༽"], ["ʕ", "ʔ"], ["(๑", "๑)"], ["(つ", "つ)"], ["(づ", "づ)"], ["(ﾉ", " )ﾉ"], ["(づ◡﹏◡)", ""]]
         };
 
-        const staticData = [
-            { text: "◮◡◭", category: "geometry" }, { text: "◪◡◪", category: "geometry" }, { text: "◗◡◖", category: "geometry" },
-            { text: "◒◡◓", category: "geometry" }, { text: "◑◡◐", category: "geometry" }, { text: "◰◡◱", category: "geometry" },
-            { text: "◕‿◕", category: "classic" }, { text: "◔̯◔", category: "classic" }, { text: "⊙﹏⊙", category: "classic" },
-            { text: "⚆_⚆", category: "classic" }, { text: "๏̯๏", category: "classic" }, { text: "°◡°", category: "minimal" },
-            { text: "•◡•", category: "minimal" }, { text: "·ᴗ·", category: "minimal" }, { text: "¬‿¬", category: "classic" },
-            { text: "⌐■_■", category: "complex" }, { text: "(ツ)", category: "classic" }, { text: " ت ", category: "minimal" },
-            { text: "ᕙ⇀↼ᕗ", category: "action" }, { text: "ᕕ( ᐛ )ᕗ", category: "action" }, { text: "(╯°□°）╯︵ ┻━┻", category: "action" },
-            { text: "┬─┬ノ( º _ ºノ)", category: "action" }, { text: "༼ つ ◕_◕ ༽つ", category: "complex" }, { text: " (づ◡﹏◡)づ", category: "complex" },
-            { text: "∠( ᐛ 」∠)＿", category: "action" }, { text: "щ(ºДºщ)", category: "complex" }, { text: "Σ(□_□)", category: "classic" },
-            { text: "(´• ω •`)", category: "classic" }, { text: "v_v", category: "minimal" }, { text: "u_u", category: "minimal" },
-            { text: "X_X", category: "minimal" }, { text: "O_o", category: "minimal" }, { text: "◖ᵔ◡ᵔ◗", category: "geometry" },
-            { text: "ᗒ◡ᗕ", category: "classic" }, { text: "ᗗ◡ᗗ", category: "classic" }, { text: "ʕ•ᴥ•ʔ", category: "complex" }
+        const handPickedData = [
+            // SIMPLE (No brackets)
+            { text: "◕‿◕", category: "simple" }, { text: "◮◡◭", category: "simple" }, { text: "◪◡◪", category: "simple" },
+            { text: "◖◡◗", category: "simple" }, { text: "⊙◡⊙", category: "simple" }, { text: "⚆◡⚆", category: "simple" },
+            { text: "°◡°", category: "simple" }, { text: "•◡•", category: "simple" }, { text: "·◡·", category: "simple" },
+            { text: "◔◡◔", category: "simple" }, { text: "ᵔ◡ᵔ", category: "simple" }, { text: "¬‿¬", category: "simple" },
+            { text: "◑◡◐", category: "simple" }, { text: "๏◡๏", category: "simple" }, { text: "⍤◡⍤", category: "simple" },
+            { text: "≖◡≖", category: "simple" }, { text: "≗◡≗", category: "simple" }, { text: "⪧◡⪦", category: "simple" },
+            { text: "X◡X", category: "simple" }, { text: "U◡U", category: "simple" }, { text: "V◡V", category: "simple" },
+
+            // CUTE
+            { text: "(◡‿◡✿)", category: "cute" }, { text: "(◕‿◕✿)", category: "cute" }, { text: "(っ˘ڡ˘ς)", category: "cute" },
+            { text: "(´｡• ᵕ •｡`)", category: "cute" }, { text: "(｡♥‿♥｡)", category: "cute" }, { text: "(✿◠‿◠)", category: "cute" },
+            { text: "(*^‿^*)", category: "cute" }, { text: "(⌒‿⌒)", category: "cute" }, { text: "(.❛ ᴗ ❛.)", category: "cute" },
+            { text: "(◕‿◕)", category: "cute" }, { text: "٩(◕‿◕)۶", category: "cute" }, { text: " ( ◡_◡ )", category: "cute" },
+            { text: " (o˘◡˘o)", category: "cute" }, { text: " (´꒳`)", category: "cute" }, { text: " (´• ω •`)", category: "cute" },
+            
+            // COOL / PRO
+            { text: "⌐■_■", category: "cool" }, { text: "(⌐■◡■)", category: "cool" }, { text: "(-_■)", category: "cool" },
+            { text: "( •_•)>⌐■-■", category: "cool" }, { text: "( ≖‿  ≖)", category: "cool" }, { text: "(￣▽￣)ノ", category: "cool" },
+            { text: " (─‿‿─)", category: "cool" }, { text: " (¬‿¬)", category: "cool" }, { text: " (⇀‸↼‶)", category: "cool" },
+
+            // FUNNY / CRAZY
+            { text: "(o^▽^o)", category: "funny" }, { text: "(≧◡≦)", category: "funny" }, { text: "(☆▽☆)", category: "funny" },
+            { text: "ヽ(>∀<)ﾉ", category: "funny" }, { text: "(´ ∀ ` *)", category: "funny" }, { text: "٩(ˊᗜˋ*)ו", category: "funny" },
+            { text: " (＠_＠)", category: "funny" }, { text: " (⊙_⊙)", category: "funny" }, { text: " (o_O)", category: "funny" },
+            { text: " (ﾟДﾟ)", category: "funny" }, { text: " (・∀・)", category: "funny" },
+            
+            // GEOMETRY
+            { text: "▲◡▲", category: "geometry" }, { text: "▼◡▼", category: "geometry" }, { text: "◆◡◆", category: "geometry" },
+            { text: "◉◡◉", category: "geometry" }, { text: "◙◡◙", category: "geometry" }, { text: "◘◡◘", category: "geometry" },
+            
+            // ACTION
+            { text: "ᕙ(⇀‸↼)ᕗ", category: "action" }, { text: "ᕙ(`▿´)ᕗ", category: "action" }, { text: "ᕕ( ᐛ )ᕗ", category: "action" },
+            { text: "(╯°□°）╯︵ ┻━┻", category: "action" }, { text: "┬─┬ノ( º _ ºノ)", category: "action" }, { text: " (づ◡﹏◡)づ", category: "action" },
+            { text: " (ノ￣ω￣)ノ", category: "action" }, { text: " (シ. .)シ", category: "action" }, { text: " (づ ◕‿◕ )づ", category: "action" }
         ];
 
-        let allKao = [...staticData];
+        let allKao = [...handPickedData];
 
-        // Generate masses of variations
-        function generateMore() {
-            for (let i = 0; i < 400; i++) {
+        function generateMassive() {
+            for (let i = 0; i < 700; i++) {
                 const eye = symbols.eyes[Math.floor(Math.random() * symbols.eyes.length)];
                 const mouth = symbols.mouths[Math.floor(Math.random() * symbols.mouths.length)];
-                const armSet = symbols.arms[Math.floor(Math.random() * symbols.arms.length)];
+                const bracket = symbols.brackets[Math.floor(Math.random() * symbols.brackets.length)];
+                const decor = Math.random() > 0.8 ? symbols.decor[Math.floor(Math.random() * symbols.decor.length)] : "";
                 
-                const styles = [
-                    `${eye}${mouth}${eye}`,
-                    `${armSet[0]}${eye}${mouth}${eye}${armSet[1]}`,
-                    `${eye}_${eye}`,
-                    `${eye}-${eye}`,
-                    `${eye}.${eye}`
-                ];
+                // Decide if it's a "Simple" one (no brackets) or a standard one
+                const isSimple = Math.random() > 0.7;
                 
-                const text = styles[Math.floor(Math.random() * styles.length)];
+                let text;
+                if (isSimple) {
+                    text = `${eye}${mouth}${eye}${decor}`;
+                } else {
+                    const styles = [
+                        `${bracket[0]}${eye}${mouth}${eye}${bracket[1]}${decor}`,
+                        `${bracket[0]}${eye}_${eye}${bracket[1]}`,
+                        `${bracket[0]}${eye}‸${eye}${bracket[1]}`,
+                        `${bracket[0]}${eye}◡${eye}${bracket[1]}✧`
+                    ];
+                    text = styles[Math.floor(Math.random() * styles.length)];
+                }
                 
-                // Avoid duplicates
                 if (!allKao.some(k => k.text === text)) {
-                    let cat = "classic";
-                    if (text.length <= 3) cat = "minimal";
-                    else if (text.includes('◮') || text.includes('◪')) cat = "geometry";
-                    else if (text.length > 7) cat = "complex";
+                    let cat = isSimple ? "simple" : "geometry";
+                    if (text.includes('✿') || text.includes('◡')) cat = isSimple ? "simple" : "cute";
+                    else if (text.includes('ᕙ') || text.includes('ᕕ')) cat = "action";
                     
                     allKao.push({ text, category: cat });
                 }
             }
         }
 
-        generateMore();
+        generateMassive();
 
         function render(data) {
             const grid = document.getElementById('grid');
@@ -177,7 +201,7 @@
 
         function search() {
             const q = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allKao.filter(k => k.text.toLowerCase().includes(q));
+            const filtered = allKao.filter(k => k.text.toLowerCase().includes(q) || k.category.toLowerCase().includes(q));
             render(filtered);
         }
 
