@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>עולם הפרצופים - המאגר הענק</title>
+    <title>עולם הפרצופים - המאגר הענק והנקי</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,237 +12,176 @@
             background-color: #f1f5f9;
         }
         .kaomoji-card {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             cursor: pointer;
             user-select: none;
+            background: white;
         }
         .kaomoji-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-color: #6366f1;
-            background-color: #fff;
-        }
-        .kaomoji-card:active {
-            transform: scale(0.95);
+            border-color: #4f46e5;
         }
         .toast {
             position: fixed;
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
-            background: #1e293b;
+            background: #0f172a;
             color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 9999px;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             z-index: 100;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
         .toast.show {
             opacity: 1;
             bottom: 3rem;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .count-badge {
+            background: #4f46e5;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-10">
+<body class="min-h-screen p-4 md:p-10 pb-24">
 
-    <header class="max-w-5xl mx-auto text-center mb-12">
-        <div class="inline-block p-2 px-4 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold mb-4">
-            המאגר הענק: מעל 250 פרצופים!
-        </div>
-        <h1 class="text-5xl font-extrabold text-slate-900 mb-4">עולם ה-Kaomoji המורחב ＼(٥口٥)／</h1>
-        <p class="text-xl text-slate-600">המאגר הכי גדול של פרצופי טקסט מוכנים להעתקה</p>
+    <!-- Header -->
+    <header class="max-w-5xl mx-auto text-center mb-10">
+        <h1 class="text-5xl font-black text-slate-900 mb-4">◮◡◭ ה-Kaomoji-דקס ◪◡◪</h1>
+        <p class="text-lg text-slate-600">מאות פרצופי טקסט נקיים ללא אימוג'ים - העתקה בלחיצה אחת</p>
     </header>
 
-    <div class="max-w-5xl mx-auto mb-10 sticky top-4 z-40 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-slate-200">
-        <div class="flex flex-wrap justify-center gap-2 mb-4" id="category-filters">
-            <button onclick="filterItems('all', this)" class="filter-btn px-4 py-2 bg-indigo-600 text-white rounded-xl font-bold transition shadow-md">הכל</button>
-            <button onclick="filterItems('happy', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">שמח ◕‿◕</button>
-            <button onclick="filterItems('love', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">אהבה ♡</button>
-            <button onclick="filterItems('sad', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">עצוב (╥﹏╥)</button>
-            <button onclick="filterItems('angry', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">כועס ヽ(`д´)נ</button>
-            <button onclick="filterItems('surprised', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">מופתע (O_O)</button>
-            <button onclick="filterItems('animal', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">חיות ʕ•ᴥ•ʔ</button>
-            <button onclick="filterItems('action', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">פעולות ᕕ( ᐛ )ᕗ</button>
-            <button onclick="filterItems('music', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">מוזיקה ♫</button>
-            <button onclick="filterItems('food', this)" class="filter-btn px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">אוכל 旦</button>
+    <!-- Navigation -->
+    <nav class="max-w-6xl mx-auto mb-8 sticky top-4 z-40 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-xl border border-slate-200">
+        <div class="flex flex-wrap justify-center gap-2 mb-4" id="filters">
+            <button onclick="filterItems('all', this)" class="btn-filter px-5 py-2 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg transition">הכל</button>
+            <button onclick="filterItems('classic', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">קלאסי ◮◡◭</button>
+            <button onclick="filterItems('geometry', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">גיאומטרי ◗◡◖</button>
+            <button onclick="filterItems('minimal', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">מינימלי •◡•</button>
+            <button onclick="filterItems('action', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">פעולה ᕕ( ᐛ )ᕗ</button>
+            <button onclick="filterItems('complex', this)" class="btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition">מורכב (づ◡﹏◡)づ</button>
         </div>
         
-        <div class="relative max-w-lg mx-auto">
-            <input type="text" id="searchInput" oninput="searchKaomoji()" placeholder="חפשו פרצוף או קטגוריה..." class="w-full px-5 py-3 pr-12 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition text-lg">
-            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </div>
+        <div class="relative max-w-xl mx-auto">
+            <input type="text" id="searchInput" oninput="search()" placeholder="חיפוש מהיר..." class="w-full px-6 py-4 pr-12 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition text-xl">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">🔍</span>
         </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-2 mb-6 flex justify-between items-center">
+        <span class="text-slate-500">נמצאו <b id="count" class="text-indigo-600">0</b> תוצאות</span>
     </div>
 
-    <div class="max-w-6xl mx-auto mb-4 text-slate-500 text-sm px-2">
-        נמצאו <span id="count-display" class="font-bold text-indigo-600">0</span> פרצופים להעתקה
-    </div>
-
-    <main id="kaomoji-grid" class="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-20">
+    <!-- Grid -->
+    <main id="grid" class="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <!-- JS builds cards here -->
     </main>
 
-    <div id="toast" class="toast">הועתק ללוח! 📋</div>
+    <div id="toast" class="toast">הועתק! ✓</div>
 
     <script>
-        const kaomojiData = [
-            // HAPPY (60+)
-            { text: "◍‿◉", category: "happy" }, { text: "◕‿◕", category: "happy" }, { text: "(^_^) ", category: "happy" }, 
-            { text: "(^O^) ", category: "happy" }, { text: "(っ◕‿◕)っ", category: "happy" }, { text: "(๑>ᴗ<๑)", category: "happy" },
-            { text: "o(>ω<)o", category: "happy" }, { text: "(*^ω^*)", category: "happy" }, { text: "(´ ∀ ` *)", category: "happy" },
-            { text: "٩(◕‿◕)۶", category: "happy" }, { text: "(o^▽^o)", category: "happy" }, { text: "(⌒▽⌒)☆", category: "happy" },
-            { text: "<(￣︶￣)>", category: "happy" }, { text: "(✷‿✷)", category: "happy" }, { text: "(.❛ ᴗ ❛.)", category: "happy" },
-            { text: "＼(＾▽＾)／", category: "happy" }, { text: "(*¯︶¯*)", category: "happy" }, { text: "(o˘◡˘o)", category: "happy" },
-            { text: "╰(▔∀▔)╯", category: "happy" }, { text: "(✯◡✯)", category: "happy" }, { text: "(◕‿◕✿)", category: "happy" },
-            { text: "(*^‿^*)", category: "happy" }, { text: "٩(ˊᗜˋ*)ו", category: "happy" }, { text: "( ´ ▽ ` )", category: "happy" },
-            { text: "(￣▽￣)", category: "happy" }, { text: "(^.^)ノ", category: "happy" }, { text: "(~˘▽˘)~", category: "happy" },
-            { text: "(^◡^ )", category: "happy" }, { text: "(o´▽`o)", category: "happy" }, { text: "d(>_・)", category: "happy" },
-            { text: "(〃＾▽＾〃)", category: "happy" }, { text: "(★ω★)", category: "happy" }, { text: "o(≧▽≦)o", category: "happy" },
-            { text: "(☆▽☆)", category: "happy" }, { text: "(*≧ω≦*)", category: "happy" }, { text: "＼(￣▽￣)／", category: "happy" },
-            { text: "(っ˘ω˘ς )", category: "happy" }, { text: "٩(◕‿◕｡)۶", category: "happy" }, { text: "ヽ(o^ ^o)ﾉ", category: "happy" },
-            { text: "(´• ω •`)", category: "happy" }, { text: "(＾▽＾)", category: "happy" }, { text: "╰(⸝⸝⸝´꒳`⸝⸝⸝)╯", category: "happy" },
+        const symbols = {
+            eyes: ["◮", "◪", "◗", "◖", "◕", "◔", "⊙", "⚆", "๏", "°", "•", "·", "⍤", "⍥", "⍨", "ᵔ", "¬", "◑", "◐", "X", "U", "V", "ಠ", "Θ", "O", "o", "♥", "♦", "◊", "◘", "◙", "◜", "◝", "◡", "◠", "◒", "◓"],
+            mouths: ["◡", "‿", "▿", " ", "_", "ω", "﹏", "‸", "Δ", "▽", "ᴥ", "◡", "‿", "v", "V", "o", "O", "☐", "▭", "口", "皿", "ㅅ", "꒳", "A"],
+            arms: [["(", ")"], ["[", "]"], ["{", "}"], ["<", ">"], ["⤜", "⤏"], ["ᕙ", "ᕗ"], ["ᕦ", "ᕤ"], ["༼", "༽"], ["(づ", " )づ"], ["ᕕ(", ")ᕗ"], ["╰(", ")╯"], ["(つ", ")つ"]]
+        };
 
-            // LOVE
-            { text: "(♡-_-♡)", category: "love" }, { text: "(❤ω❤)", category: "love" }, { text: "╰(*´︶`*)╯♡", category: "love" },
-            { text: "( ´ ∀ `)ノ～ ♡", category: "love" }, { text: "(´｡• ᵕ •｡`) ♡", category: "love" }, { text: "(♡μ_μ)", category: "love" },
-            { text: "( ˘⌣˘)♡(˘⌣˘ )", category: "love" }, { text: "♡(>ᴗ•)", category: "love" }, { text: "(灬♥ω♥灬)", category: "love" },
-            { text: "(´• ω •`) ♡", category: "love" }, { text: "(/▽＼*)｡o○♡", category: "love" }, { text: "(─‿‿─)♡", category: "love" },
-            { text: "(❤ε❤)", category: "love" }, { text: "（ʃƪ〃ﾟ◡ﾟ〃）", category: "love" }, { text: "(^³^(♡-_-♡)", category: "love" },
-            { text: " (´♡‿♡`)", category: "love" }, { text: "(°◡°♡)", category: "love" }, { text: "♡o( ❛ᴗ❛ )o♡", category: "love" },
-
-            // SAD
-            { text: "(;﹏;)", category: "sad" }, { text: "(T_T)", category: "sad" }, { text: "(╥﹏╥)", category: "sad" },
-            { text: "(╯_╰)", category: "sad" }, { text: "(´-ω-`)", category: "sad" }, { text: "(-_-)", category: "sad" },
-            { text: "(._.)", category: "sad" }, { text: "(o_ _)o", category: "sad" }, { text: "(｡T ω T｡)", category: "sad" },
-            { text: "(个_个)", category: "sad" }, { text: "(╯︵╰,)", category: "sad" }, { text: "｡･ﾟﾟ･(>_<)･ﾟﾟ･｡", category: "sad" },
-            { text: "(μ_μ)", category: "sad" }, { text: "(ノ﹏ヽ)", category: "sad" }, { text: "（┬┬＿┬┬）", category: "sad" },
-            { text: " ( ◡_◡ )", category: "sad" }, { text: "(´д｀)", category: "sad" }, { text: " (v_v)", category: "sad" },
-
-            // ANGRY
-            { text: "(#`Д´)", category: "angry" }, { text: "(-_-#)", category: "angry" }, { text: "(怒-_-)ノ", category: "angry" },
-            { text: "ヽ( `д´*)ノ", category: "angry" }, { text: "(＃｀д´)ﾉ", category: "angry" }, { text: "(‡▼益▼)", category: "angry" },
-            { text: "凸(｀△´＋)", category: "angry" }, { text: "＼(〇_ｏ)／", category: "angry" }, { text: "( º皿º )", category: "angry" },
-            { text: "ヽ(｀⌒´メ)ノ", category: "angry" }, { text: "凸(｀⌒´メ)凸", category: "angry" }, { text: "（｀Δ´）！", category: "angry" },
-            { text: " (＃＞＜)", category: "angry" }, { text: "(︶︹︺)", category: "angry" }, { text: " (・`ω´・)", category: "angry" },
-
-            // SURPRISED
-            { text: "(o_O)", category: "surprised" }, { text: "(O_O;)", category: "surprised" }, { text: "∑(O_O;)", category: "surprised" },
-            { text: "(⊙_⊙)", category: "surprised" }, { text: "(@_@)", category: "surprised" }, { text: "(o_O) !", category: "surprised" },
-            { text: "(ﾟДﾟ)", category: "surprised" }, { text: "w(°ｏ°)w", category: "surprised" }, { text: "Σ(□_□)", category: "surprised" },
-            { text: "(✿☉｡☉)", category: "surprised" }, { text: "щ(゜ロ゜щ)", category: "surprised" }, { text: "(○.○)", category: "surprised" },
-            { text: " ((((；゜Д゜)))", category: "surprised" }, { text: "(´⊙ω⊙`)", category: "surprised" },
-
-            // ANIMALS
-            { text: "(=^･ω･^=)", category: "animal" }, { text: "(=^･ｪ･^=)", category: "animal" }, { text: "(=①ω①=)", category: "animal" },
-            { text: "V●ᴥ●V", category: "animal" }, { text: "(ᵔᴥᵔ)", category: "animal" }, { text: "ʕ •ᴥ•ʔ", category: "animal" },
-            { text: "(^._.^)ﾉ", category: "animal" }, { text: "Ƹ̵̡Ӝ̵̨̄Ʒ", category: "animal" }, { text: "/ᐠ｡ꞈ｡ᐟ\\", category: "animal" },
-            { text: "(=^-ω-^=)", category: "animal" }, { text: "⊂(￣▽￣)⊃", category: "animal" }, { text: "ʕ ᵔᴥᵔ ʔ", category: "animal" },
-            { text: "ᶘ ᵒᴥᵒᶅ", category: "animal" }, { text: "ᓚᘏᗢ", category: "animal" }, { text: "૮ ºﻌº א", category: "animal" },
-            { text: " (￣(ｴ)￣)", category: "animal" }, { text: "(´(ｪ)｀）", category: "animal" }, { text: " (Ф皿Ф)", category: "animal" },
-            { text: " (^˵◕ω◕˵^)", category: "animal" }, { text: " (◕ᴥ◕)", category: "animal" },
-
-            // ACTIONS
-            { text: "ᕕ( ᐛ )ᕗ", category: "action" }, { text: "ᕙ(`▿´)ᕗ", category: "action" }, { text: "(シ. .)シ", category: "action" },
-            { text: "ヽ(ˇ∀ˇ)人(ˇ∀ˇ)ノ", category: "action" }, { text: "( ￣w￣)Ψ", category: "action" }, { text: "（ー_ー）zzZ", category: "action" },
-            { text: "(-_-) zzz", category: "action" }, { text: " (－ω－) zzZ", category: "action" }, { text: "ヾ(・ω・)メ(・ω・)ノ", category: "action" },
-            { text: "ε=ε=ε=ε=┌(;￣▽￣)┘", category: "action" }, { text: "(*・∀・)爻(・∀・*)", category: "action" }, { text: " (づ◡﹏◡)づ", category: "action" },
-            { text: " ( ￣▽￣)[] [] (￣▽￣ )", category: "action" }, { text: "(ヘ･_･)ヘ┳━┳", category: "action" }, { text: "(╯°□°）╯︵ ┻━┻", category: "action" },
-
-            // MUSIC
-            { text: "♪♪♪ ヽ(ˇ∀ˇ )ゞ", category: "music" }, { text: " (￣▽￣)ノ♪", category: "music" }, { text: " ヾ(⌐■_■)ノ♪", category: "music" },
-            { text: " (ノ￣ω￣)ノ♪", category: "music" }, { text: " ~(˘▽˘~)", category: "music" }, { text: " ✺◟( • ω • )◞✺", category: "music" },
-            { text: " (奏^‿^)奏", category: "music" }, { text: " ♬♫♪◖(●◡●)◗♪♫♬", category: "music" },
-
-            // FOOD
-            { text: " (っ˘ڡ˘ς)", category: "food" }, { text: " ( ´∀｀)っ旦", category: "food" }, { text: " ( ￣▽￣)旦", category: "food" },
-            { text: " (っˆڡˆς)", category: "food" }, { text: " (￣～￣) 嚼嚼", category: "food" }, { text: " (๑´ڡ`๑)", category: "food" }
+        const staticData = [
+            { text: "◮◡◭", category: "geometry" }, { text: "◪◡◪", category: "geometry" }, { text: "◗◡◖", category: "geometry" },
+            { text: "◒◡◓", category: "geometry" }, { text: "◑◡◐", category: "geometry" }, { text: "◰◡◱", category: "geometry" },
+            { text: "◕‿◕", category: "classic" }, { text: "◔̯◔", category: "classic" }, { text: "⊙﹏⊙", category: "classic" },
+            { text: "⚆_⚆", category: "classic" }, { text: "๏̯๏", category: "classic" }, { text: "°◡°", category: "minimal" },
+            { text: "•◡•", category: "minimal" }, { text: "·ᴗ·", category: "minimal" }, { text: "¬‿¬", category: "classic" },
+            { text: "⌐■_■", category: "complex" }, { text: "(ツ)", category: "classic" }, { text: " ت ", category: "minimal" },
+            { text: "ᕙ⇀↼ᕗ", category: "action" }, { text: "ᕕ( ᐛ )ᕗ", category: "action" }, { text: "(╯°□°）╯︵ ┻━┻", category: "action" },
+            { text: "┬─┬ノ( º _ ºノ)", category: "action" }, { text: "༼ つ ◕_◕ ༽つ", category: "complex" }, { text: " (づ◡﹏◡)づ", category: "complex" },
+            { text: "∠( ᐛ 」∠)＿", category: "action" }, { text: "щ(ºДºщ)", category: "complex" }, { text: "Σ(□_□)", category: "classic" },
+            { text: "(´• ω •`)", category: "classic" }, { text: "v_v", category: "minimal" }, { text: "u_u", category: "minimal" },
+            { text: "X_X", category: "minimal" }, { text: "O_o", category: "minimal" }, { text: "◖ᵔ◡ᵔ◗", category: "geometry" },
+            { text: "ᗒ◡ᗕ", category: "classic" }, { text: "ᗗ◡ᗗ", category: "classic" }, { text: "ʕ•ᴥ•ʔ", category: "complex" }
         ];
 
-        // Fill up to 250+ with some unique generated combinations
-        for(let i=0; i<100; i++) {
-            const base = kaomojiData[i % kaomojiData.length];
-            const decorations = ["✨", "⭐", "💨", "💢", "💦", "💤", "🔥"];
-            kaomojiData.push({ 
-                text: base.text + " " + decorations[i % decorations.length], 
-                category: base.category 
-            });
+        let allKao = [...staticData];
+
+        // Generate masses of variations
+        function generateMore() {
+            for (let i = 0; i < 400; i++) {
+                const eye = symbols.eyes[Math.floor(Math.random() * symbols.eyes.length)];
+                const mouth = symbols.mouths[Math.floor(Math.random() * symbols.mouths.length)];
+                const armSet = symbols.arms[Math.floor(Math.random() * symbols.arms.length)];
+                
+                const styles = [
+                    `${eye}${mouth}${eye}`,
+                    `${armSet[0]}${eye}${mouth}${eye}${armSet[1]}`,
+                    `${eye}_${eye}`,
+                    `${eye}-${eye}`,
+                    `${eye}.${eye}`
+                ];
+                
+                const text = styles[Math.floor(Math.random() * styles.length)];
+                
+                // Avoid duplicates
+                if (!allKao.some(k => k.text === text)) {
+                    let cat = "classic";
+                    if (text.length <= 3) cat = "minimal";
+                    else if (text.includes('◮') || text.includes('◪')) cat = "geometry";
+                    else if (text.length > 7) cat = "complex";
+                    
+                    allKao.push({ text, category: cat });
+                }
+            }
         }
 
-        function renderGrid(data) {
-            const grid = document.getElementById('kaomoji-grid');
-            const countDisplay = document.getElementById('count-display');
+        generateMore();
+
+        function render(data) {
+            const grid = document.getElementById('grid');
+            const count = document.getElementById('count');
             grid.innerHTML = '';
             
             data.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'kaomoji-card bg-white border border-slate-200 rounded-2xl p-6 flex items-center justify-center text-xl font-medium text-slate-800 shadow-sm text-center';
-                div.innerText = item.text;
-                div.title = "לחץ להעתקה";
-                div.onclick = () => copyToClipboard(item.text);
-                grid.appendChild(div);
+                const card = document.createElement('div');
+                card.className = 'kaomoji-card border border-slate-200 rounded-2xl p-6 flex items-center justify-center text-xl font-bold text-slate-800 shadow-sm text-center';
+                card.innerText = item.text;
+                card.onclick = () => {
+                    const el = document.createElement('textarea');
+                    el.value = item.text;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    
+                    const toast = document.getElementById('toast');
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 1500);
+                };
+                grid.appendChild(card);
             });
-            
-            countDisplay.innerText = data.length;
-        }
-
-        function copyToClipboard(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-9999px";
-            textArea.style.top = "0";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast();
-                }
-            } catch (err) {
-                console.error('שגיאה בהעתקה:', err);
-            }
-            
-            document.body.removeChild(textArea);
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
+            count.innerText = data.length;
         }
 
         function filterItems(category, btn) {
-            const filtered = category === 'all' ? kaomojiData : kaomojiData.filter(item => item.category === category);
-            renderGrid(filtered);
+            const filtered = category === 'all' ? allKao : allKao.filter(k => k.category === category);
+            render(filtered);
             
-            document.querySelectorAll('.filter-btn').forEach(b => {
-                b.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
-                b.classList.add('bg-slate-100', 'text-slate-700');
+            document.querySelectorAll('.btn-filter').forEach(b => {
+                b.className = 'btn-filter px-5 py-2 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition';
             });
-            btn.classList.remove('bg-slate-100', 'text-slate-700');
-            btn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+            btn.className = 'btn-filter px-5 py-2 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg transition';
         }
 
-        function searchKaomoji() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = kaomojiData.filter(item => 
-                item.text.toLowerCase().includes(query) || 
-                item.category.toLowerCase().includes(query)
-            );
-            renderGrid(filtered);
+        function search() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allKao.filter(k => k.text.toLowerCase().includes(q));
+            render(filtered);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            renderGrid(kaomojiData);
-        });
+        window.onload = () => render(allKao);
     </script>
 </body>
 </html>
